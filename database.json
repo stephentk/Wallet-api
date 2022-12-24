@@ -1,0 +1,17 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "wallet_db",
+      "user": "user_test",
+      "password": "password123"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "wallet_db_test",
+      "user": "user_test_test",
+      "password": "password123"
+    }
+  }
+  
