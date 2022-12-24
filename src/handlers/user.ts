@@ -6,14 +6,16 @@ import dotenv from 'dotenv'
 
 const store = new UserStore()
 const create = async(req:Request,res:Response) => {
+   
     try{
+         const myToken = String(process.env.TOKEN_SECRET)
         const user:User = {
             username: req.body.username,
             password: req.body.password,
             
         }
         const newUser = await store.create(user)
-        const token = jwt.sign({user:newUser}, 'RANDOM_SECRET_FOR_TOKEN')
+        const token = jwt.sign({user:newUser}, myToken)
         res.json(token)
    }
    catch(error){
@@ -27,8 +29,9 @@ const authenticate = async(req:Request,res:Response) => {
         password:req.body.password
     }
     try{
+         const myToken = String(process.env.TOKEN_SECRET)
         const result = await store.authenticate(req.body.username,req.body.password);
-        const token = jwt.sign({user:result},'RANDOM_SECRET_FOR_TOKEN')
+        const token = jwt.sign({user:result},myToken)
         res.json(token)
     }
     catch (error){
@@ -37,17 +40,6 @@ const authenticate = async(req:Request,res:Response) => {
     }
 }
 
-/*const verifyAuthToken = (req: Request, res: Response, next) => {
-    try {
-        const authorizationHeader = req.headers.authorization
-        const token = authorizationHeader?.split(' ')[1]
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
-        next()
-    } catch (error) {
-        res.status(401)
-    }
-}
-*/
 
 const user_routes = (app:express.Application) => {
     app.post("/user",create)
