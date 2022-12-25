@@ -19,7 +19,7 @@ This project was bootstrapped with the following tools:
 All of these dependencies required are listed in the package.json file. Use `npm install` on the command line.
 Environment variables are defined in a .env file. 
 
-> However, you will need to install node and postgreSQL on your local machine
+> However, you will need to install node and postgreSQL on your local machine.
 
 ## Installation
 The steps outline will provide a walkthrough on how to install the app on your local machine
