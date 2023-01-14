@@ -7,7 +7,7 @@ import account_routes from "./handlers/account"
 require("dotenv").config();
 
 
-const app = express()
+const app = express();
 
 const port = 5000;
 
