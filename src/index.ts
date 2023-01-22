@@ -11,7 +11,7 @@ const app = express();
 
 const port = 5000;
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json())
 user_routes(app)
 account_routes(app)
