@@ -13,7 +13,7 @@ const port = 5000;
 
 app.use(cors());
 app.use(bodyParser.json())
-user_routes(app)
+user_routes(app);
 account_routes(app)
 
 
