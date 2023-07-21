@@ -19,9 +19,13 @@ class accounts {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //@ts-ignore
-                const sql = 'INSERT INTO Account(id,balance,user_id) values ($1,$2,$3) returning *';
+                const sql = "INSERT INTO Account(id,balance,user_id) values ($1,$2,$3) returning *";
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [account.id, account.balance, account.user_id]);
+                const result = yield conn.query(sql, [
+                    account.id,
+                    account.balance,
+                    account.user_id,
+                ]);
                 const acc = result.rows[0];
                 conn.release();
                 return acc;
@@ -35,7 +39,39 @@ class accounts {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //@ts-ignore
-                const sql = 'Update account SET balance = balance-45 WHERE user_id=($1) *';
+                const sql = "Update account SET balance = balance-45 WHERE user_id=($1) RETURNING *";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [user_id]);
+                const acc = result.rows[0];
+                conn.release();
+                return acc;
+            }
+            catch (error) {
+                throw new Error(`could not update account of ,error ${error}`);
+            }
+        });
+    }
+    transferFrom(user_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //@ts-ignore
+                const sql = "Update account SET balance = balance - 120 WHERE user_id=($1)  RETURNING * ";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [user_id]);
+                const acc = result.rows[0];
+                conn.release();
+                return acc;
+            }
+            catch (error) {
+                throw new Error(`could not update account of ,error ${error}`);
+            }
+        });
+    }
+    transferTo(user_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //@ts-ignore
+                const sql = "Update account SET balance = 120 WHERE user_id=($2) RETURNING *";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [user_id]);
                 const acc = result.rows[0];

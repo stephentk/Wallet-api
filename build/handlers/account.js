@@ -16,7 +16,7 @@ const fund = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const account = {
             id: req.body.id,
             balance: req.body.balance,
-            user_id: req.body.user_id
+            user_id: req.body.user_id,
         };
         const newacc = yield wallet.fundAccount(account);
         res.json(newacc);
@@ -30,8 +30,18 @@ const withdraw = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const withdrawFund = yield wallet.withdraw(req.body.user_id);
     res.json(withdrawFund);
 });
+const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const transferFund = yield wallet.transferFrom(req.body.user_id);
+    res.json(transferFund);
+});
+const transferto = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const transferFund = yield wallet.transferTo(req.body.user_id);
+    res.json(transferFund);
+});
 const account_routes = (app) => {
-    app.post('/fund', fund);
-    app.put('/withdrawal', withdraw);
+    app.post("/fund", fund);
+    app.patch("/withdrawal", withdraw);
+    app.patch("/transfer", transfer);
+    app.post("/transferin", transferto);
 };
 exports.default = account_routes;

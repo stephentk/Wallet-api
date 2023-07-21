@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "test": "npm run build && npm run jasmine",
-    "prettier": "prettier --config prettierrc 'src/**/*.js' --write",
+    "prettier": "prettier --config prettierrc 'src/**/*.ts' --write",
     "watch": "tsc-watch --esModuleInterop src/index.ts --outDir ./dist --onSuccess \"node ./dist/.index.js\"",
     "build": "npx tsc",
     "jasmine": "jasmine",

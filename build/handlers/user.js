@@ -17,12 +17,13 @@ const user_1 = require("../models/user");
 const store = new user_1.UserStore();
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const myToken = String(process.env.TOKEN_SECRET);
         const user = {
             username: req.body.username,
             password: req.body.password,
         };
         const newUser = yield store.create(user);
-        const token = jsonwebtoken_1.default.sign({ user: newUser }, 'RANDOM_SECRET_FOR_TOKEN');
+        const token = jsonwebtoken_1.default.sign({ user: newUser }, myToken);
         res.json(token);
     }
     catch (error) {
@@ -33,11 +34,12 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = {
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
     };
     try {
+        const myToken = String(process.env.TOKEN_SECRET);
         const result = yield store.authenticate(req.body.username, req.body.password);
-        const token = jsonwebtoken_1.default.sign({ user: result }, 'RANDOM_SECRET_FOR_TOKEN');
+        const token = jsonwebtoken_1.default.sign({ user: result }, myToken);
         res.json(token);
     }
     catch (error) {
@@ -45,17 +47,6 @@ const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json({ error });
     }
 });
-/*const verifyAuthToken = (req: Request, res: Response, next) => {
-    try {
-        const authorizationHeader = req.headers.authorization
-        const token = authorizationHeader?.split(' ')[1]
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
-        next()
-    } catch (error) {
-        res.status(401)
-    }
-}
-*/
 const user_routes = (app) => {
     app.post("/user", create);
     app.post("/login", authenticate);

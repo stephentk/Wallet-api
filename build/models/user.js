@@ -22,8 +22,8 @@ class UserStore {
             try {
                 const conn = yield database_1.default.connect();
                 // const saltRounds = process.env.SALT_ROUNDS;
-                const sql = 'INSERT into users (username,password_here) VALUES ($1,$2) RETURNING *';
-                const hash = bcrypt_1.default.hashSync(user.password + pepper, parseInt('10'));
+                const sql = "INSERT into users (username,password_here) VALUES ($1,$2) RETURNING *";
+                const hash = bcrypt_1.default.hashSync(user.password + pepper, parseInt("10"));
                 const result = conn.query(sql, [user.username, hash]);
                 conn.release();
                 return (yield result).rows[0];
